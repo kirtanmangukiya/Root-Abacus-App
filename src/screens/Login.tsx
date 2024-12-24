@@ -204,7 +204,7 @@ const LoginScreen: React.FC = () => {
               style={styles.logo}
             />
             <View style={styles.titleContainer}>
-              <Text style={styles.title}>Axcel International School</Text>
+              <Text style={styles.title}>Roots Abacus</Text>
             </View>
 
             <View style={styles.inputContainer}>

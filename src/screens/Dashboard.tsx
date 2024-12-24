@@ -151,7 +151,7 @@ const Dashboard: React.FC = () => {
       style={styles.background}>
       <View style={styles.container}>
         <TopBar
-          title="Axcel International School "
+          title="Roots Abacus"
           onRefreshPress={handleRefreshPress}
           onMenuPress={handleMenuPress}
         />

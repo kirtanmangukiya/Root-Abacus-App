@@ -498,7 +498,7 @@ const SearchScreen = () => {
       style={styles.background}
       source={require('../../assest/icons/SideBarBg.jpg')}>
       <TopBar
-        title="Axcel International School"
+        title="Roots Abacus"
         onMenuPress={handleMenuPress}
       />
       <View style={styles.searchContainer}>

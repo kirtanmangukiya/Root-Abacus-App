@@ -124,7 +124,7 @@ const SplashScreen: React.FC = React.memo(() => {
           style={styles.logo}
           resizeMode="contain"
         />
-        <Text style={styles.schoolName}>Axcel International School</Text>
+        <Text style={styles.schoolName}>Roots Abacus</Text>
       </View>
       <LottieView
         source={require('../assest/splashWave.json')}
