@@ -7,11 +7,12 @@ const StateSelectedScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handleImagePress = (screenName: keyof RootStackParamList) => {
-    navigation.navigate(screenName);
+    navigation.navigate(screenName as any);
   };
 
   return (
     <View style={styles.container}>
+      {/* first row start */}
       <View style={styles.imageRow}>
         <TouchableOpacity
           // onPress={() => handleImagePress('HomeScreen')}
@@ -21,37 +22,93 @@ const StateSelectedScreen: React.FC = () => {
           </View> */}
           <TouchableOpacity
             style={styles.imageOverlay}
-            onPress={() => navigation.navigate('ResourceAndGuide')}>
+            onPress={() => navigation.navigate('RouteAttendenceScreen' as any)}>
             <Image
               source={require('../assest/icons/dash_stat_student.png')}
               style={styles.image}
             />
-            <Text style={styles.imageText}>Resource & Guide</Text>
+            <Text style={styles.imageText}>Attendance</Text>
           </TouchableOpacity>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => handleImagePress('NewsBoard')}
+          onPress={() => handleImagePress('RouteClassSchdule' as any)}
           style={styles.imageContainer}>
           <View style={styles.imageOverlay}>
             <Image
               source={require('../assest/icons/dash_stat_teacher.jpg')}
               style={styles.image}
             />
-            <Text style={styles.imageText}>News Board</Text>
+            <Text style={styles.imageText}>Schedule</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => handleImagePress('InvoiceScreen')}
+          onPress={() => handleImagePress('RouteEventsScreen' as any)}
           style={styles.imageContainer}>
           <View style={styles.imageOverlay}>
             <Image
               source={require('../assest/icons/dash_stat_classes.jpg')}
               style={styles.image}
             />
-            <Text style={styles.imageText}>Invoice</Text>
+            <Text style={styles.imageText}>Events</Text>
           </View>
         </TouchableOpacity>
       </View>
+        {/* first row end  */}
+        {/* second row start  */}
+      <View style={styles.imageRow}>
+        <TouchableOpacity
+          style={styles.imageContainer}>
+          <TouchableOpacity
+            style={styles.imageOverlay}
+            onPress={() => navigation.navigate('RouteMediaCenter' as any)}>
+            <Image
+              source={require('../assest/icons/dash_stat_student.png')}
+              style={styles.image}
+            />
+            <Text style={styles.imageText}>Media Center</Text>
+          </TouchableOpacity>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => handleImagePress('ExamList' as any)}
+          style={styles.imageContainer}>
+          <View style={styles.imageOverlay}>
+            <Image
+              source={require('../assest/icons/dash_stat_teacher.jpg')}
+              style={styles.image}
+            />
+            <Text style={styles.imageText}>Exam List</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => handleImagePress('RouteClassScreen' as any)} //Need confirmation for navigation screen
+          style={styles.imageContainer}>
+          <View style={styles.imageOverlay}>
+            <Image
+              source={require('../assest/icons/dash_stat_classes.jpg')}
+              style={styles.image}
+            />
+            <Text style={styles.imageText}>Centres</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+       {/* second row end  */}
+       {/* third row start  */}
+      <View style={styles.imageRow}>
+        <TouchableOpacity
+          style={styles.imageContainer}>
+          <TouchableOpacity
+            style={styles.imageOverlay}
+            onPress={() => navigation.navigate('RouteTeachersScreen' as any)}>
+            <Image
+              source={require('../assest/icons/dash_stat_student.png')}
+              style={styles.image}
+            />
+            <Text style={styles.imageText}>Teachers</Text>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
+      {/* third row end  */}
+      <View style={{borderWidth: 1, borderColor: 'gray', marginTop: 10}} />
     </View>
   );
 };
@@ -62,14 +119,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    // backgroundColor: '#000', // Updated to black background for better visibility of text
   },
   imageRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    borderBottomWidth: 1,
-    borderBottomColor: 'gray',
     paddingBottom: 16,
   },
   imageContainer: {
@@ -105,7 +159,7 @@ const styles = StyleSheet.create({
   imageText: {
     position: 'absolute',
     color: 'white',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
   },
 });
