@@ -150,384 +150,333 @@ const SideBarAdmin: FC<SideBarProps> = props => {
 
   const imageUrl = `https://axcel.schoolmgmtsys.com/dashboard/profileImage/${userData.user.id}`;
   // console.log('check the image ', userData.user.id);
+    const ExternalUrlScreen = () => (
+      <WebView source={{ uri: 'https://axcellibrary.schoolmgmtsys.com' }} style={{flex: 1}} />
+    );
 
-  const ExternalUrlScreen = () => (
-    <WebView source={{ uri: 'https://axcellibrary.schoolmgmtsys.com' }} />
-  );
+    return (
+      <ImageBackground
+        source={require('../../assest/icons/SideBarBg.jpg')}
+        style={{flex: 1}}>
+        <Container>
+          <FixedContainer>
+            <AvatarContainer>
+              <Avatar
+                source={
+                  userData.user.id
+                    ? {uri: imageUrl}
+                    : require('../../assest/icons/SideBarBg.jpg')
+                }
+              />
+            </AvatarContainer>
+            <UserInfo>
+              <UserNameContainer>
+                <UserName>{userData.user.username}</UserName>
+                <TouchableOpacity onPress={() => handleLogout()}>
+                  <Entypo name="log-out" size={width * 0.05} color="white" />
+                </TouchableOpacity>
+              </UserNameContainer>
+              <NicknameContainer>
+                <Nickname>{userData.user.username}</Nickname>
+              </NicknameContainer>
+            </UserInfo>
+            <Divider />
+          </FixedContainer>
 
-  return (
-    <ImageBackground
-      source={require('../../assest/icons/SideBarBg.jpg')}
-      style={{flex: 1}}>
-      <Container>
-        <FixedContainer>
-          <AvatarContainer>
-            <Avatar
-              source={
-                userData.user.id
-                  ? {uri: imageUrl}
-                  : require('../../assest/icons/SideBarBg.jpg')
-              }
-            />
-          </AvatarContainer>
-          <UserInfo>
-            <UserNameContainer>
-              <UserName>{userData.user.username}</UserName>
-              <TouchableOpacity onPress={() => handleLogout()}>
-                <Entypo name="log-out" size={width * 0.05} color="white" />
-              </TouchableOpacity>
-            </UserNameContainer>
-            <NicknameContainer>
-              <Nickname>{userData.user.username}</Nickname>
-            </NicknameContainer>
-          </UserInfo>
-          <Divider />
-        </FixedContainer>
-
-        <ScrollView style={styles.menuItems}>
-          <MenuItem2
-            onPress={() => {
-              refreshRender(
-                'Navigating to RouteDashBoardScreen 1 2 4',
-                'Dashboard',
-              );
-              navigation.navigate('RouteDashBoardScreen');
+          <ScrollView style={styles.menuItems}>
+            {/* Dashboard */}
+            <MenuItem2 onPress={() => {
+                refreshRender('Navigating to RouteDashBoardScreen', 'Dashboard');
+                navigation.navigate('RouteDashBoardScreen' as never);
             }}>
-            <View style={{width: '20%'}}>
-              <Ionicons name="home-sharp" size={30} color="#ffffff" />
-            </View>
-            <View style={{width: '60%'}}>
+              <View style={{width: '20%'}}>
+                <Ionicons name="home-sharp" size={30} color="#ffffff" />
+              </View>
               <MenuText style={styles.menuItemText}>Dashboard</MenuText>
-            </View>
-          </MenuItem2>
+            </MenuItem2>
 
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              refreshRender(
-                'Navigating to RouteDashBoardScreen 1 2 4',
-                'NewsBoard',
-              );
-              navigation.navigate('RouteNewsBoardScreen');
+            {/* Static Pages */}
+            <MenuItem2 style={styles.menuItem} onPress={() => {
+                navigation.navigate('ExternalUrlScreen' as never);
+                refreshRender('Navigating to External URL', 'ExternalUrlScreen');
             }}>
-            <View style={{width: '20%'}}>
-              <Entypo name="news" size={30} color="#ffffff" />
-            </View>
-            <MenuText style={styles.menuItemText}>News Board</MenuText>
-          </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              navigation.navigate('RouteMessage');
-              refreshRender(
-                'Navigating to RouteDashBoardScreen 1 2 4',
-                'MessageScreen',
-              );
-            }}>
+              <View style={{width: '20%'}}>
+                <MaterialIcons name="pages" size={30} color="#ffffff" />
+              </View>
+              <MenuText style={styles.menuItemText}>Static Pages</MenuText>
+            </MenuItem2>
+
+          {/* Messages */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              navigation.navigate('RouteMessage' as never);
+              refreshRender('Navigating to Message', 'MessageScreen');
+          }}>
             <View style={{width: '20%'}}>
               <Entypo name="chat" size={30} color="#ffffff" />
             </View>
             <MenuText style={styles.menuItemText}>Messages</MenuText>
           </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              navigation.navigate('RouteClassSchdule');
-              refreshRender(
-                'Navigating to RouteDashBoardScreen 1 2 4',
-                'RouteClassSchdule',
-              );
-            }}>
-            <View style={{width: '20%'}}>
-              <MaterialIcons name="schedule" size={30} color="#ffffff" />
-            </View>
-            <MenuText style={styles.menuItemText}>Class Schedule</MenuText>
-          </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              refreshRender(
-                'Navigating to RouteDashBoardScreen 1 2 4',
-                'CalenderScreen',
-              );
-              navigation.navigate('RouteCalender');
-            }}>
+
+          {/* Calendar */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              refreshRender('Navigating to Calendar', 'CalenderScreen');
+              navigation.navigate('RouteCalender' as never);
+          }}>
             <View style={{width: '20%'}}>
               <AntDesign name="calendar" size={30} color="#ffffff" />
             </View>
-            <MenuText style={styles.menuItemText}>Calender</MenuText>
+            <MenuText style={styles.menuItemText}>Calendar</MenuText>
           </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              navigation.navigate('RouteEventsScreen');
-              refreshRender(
-                'Navigating to RouteDashBoardScreen 1 2 4',
-                'EventsScreen',
-              );
-            }}>
-            <View style={{width: '20%'}}>
-              <Entypo name="thermometer" size={30} color="#ffffff" />
-            </View>
-            <MenuText style={styles.menuItemText}>Events</MenuText>
-          </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              navigation.navigate('RouteMediaCenter');
-              refreshRender(
-                'Navigating to RouteDashBoardScreen 1 2 4',
-                'MediaCenterScreen',
-              );
-            }}>
-            <View style={{width: '20%'}}>
-              <FontAwesome name="align-center" size={30} color="#ffffff" />
-            </View>
-            <MenuText style={styles.menuItemText}>Media Center</MenuText>
-          </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              refreshRender(
-                'Navigating to RouteDashBoardScreen 1 2 4',
-                'InvoiceScreen',
-              );
-              navigation.navigate('RouteInvoiceScreen');
-            }}>
-            <View style={{width: '20%'}}>
-              <FontAwesome5
-                name="file-invoice-dollar"
-                size={30}
-                color="#ffffff"
-              />
-            </View>
-            <MenuText style={styles.menuItemText}>Invoice</MenuText>
-          </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              refreshRender(
-                'Navigating to RouteDashBoardScreen 1 2 4',
-                'DueInvoice',
-              );
-              navigation.navigate('RouteDueInvoiceScreen');
-            }}>
-            <View style={{width: '20%'}}>
-              <FontAwesome5 name="file-invoice" size={30} color="#ffffff" />
-            </View>
-            <MenuText style={styles.menuItemText}>Due Invoice</MenuText>
-          </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              navigation.navigate('RouteCreditNotesScreen');
-              refreshRender(
-                'Navigating to RouteDashBoardScreen 1 2 4',
-                'CredentialsNotesScreen',
-              );
-            }}>
-            <View style={{width: '20%'}}>
-              <AntDesign name="creditcard" size={30} color="#ffffff" />
-            </View>
-            <MenuText style={styles.menuItemText}>Credit Notes</MenuText>
-          </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              navigation.navigate('RouteHomeworkScreen');
 
-              refreshRender(
-                'Navigating to RouteDashBoardScreen 1 2 4',
-                'HomeWork',
-              );
-            }}>
+          {/* Homework */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              navigation.navigate('RouteHomeworkScreen' as never);
+              refreshRender('Navigating to Homework', 'HomeWork');
+          }}>
             <View style={{width: '20%'}}>
               <FontAwesome name="tachometer" size={30} color="#ffffff" />
             </View>
             <MenuText style={styles.menuItemText}>Homework</MenuText>
           </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              navigation.navigate('RouteStudentScreen');
-              refreshRender(
-                'Navigating to RouteDashBoardScreen 1 2 4',
-                'StudentScreen',
-              );
-            }}>
+
+          {/* Attendance */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              navigation.navigate('RouteAttendenceScreen' as never);
+              refreshRender('Navigating to Attendance', 'AttendenceScreen');
+          }}>
+            <View style={{width: '20%'}}>
+              <Entypo name="spreadsheet" size={30} color="#ffffff" />
+            </View>
+            <MenuText style={styles.menuItemText}>Attendance</MenuText>
+          </MenuItem2>
+
+          {/* Staff Attendance - Missing Screen */}
+          <MenuItem2 style={styles.menuItem}>
+            <View style={{width: '20%'}}>
+              <Entypo name="spreadsheet" size={30} color="#ffffff" />
+            </View>
+            <MenuText style={styles.menuItemText}>Staff Attendance</MenuText>
+          </MenuItem2>
+
+          {/* Books Library */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              navigation.navigate('RouteBooksLibraryScreen' as never);
+              refreshRender('Navigating to Books Library', 'BooksLibraryScreen');
+          }}>
+            <View style={{width: '20%'}}>
+              <Ionicons name="library" size={30} color="#ffffff" />
+            </View>
+            <MenuText style={styles.menuItemText}>Books Library</MenuText>
+          </MenuItem2>
+
+          {/* Teachers */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              navigation.navigate('RouteTeachersScreen' as never);
+              refreshRender('Navigating to Teachers', 'TeachersScreen');
+          }}>
+            <View style={{width: '20%'}}>
+              <Ionicons name="people" size={30} color="#ffffff" />
+            </View>
+            <MenuText style={styles.menuItemText}>Teachers</MenuText>
+          </MenuItem2>
+
+          {/* Students */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              navigation.navigate('RouteStudentScreen' as never);
+              refreshRender('Navigating to Students', 'StudentScreen');
+          }}>
             <View style={{width: '20%'}}>
               <Ionicons name="person-sharp" size={30} color="#ffffff" />
             </View>
             <MenuText style={styles.menuItemText}>Students</MenuText>
           </MenuItem2>
 
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              navigation.navigate('RouteAttendenceScreen');
-              refreshRender('Navigating to  1 2 4', 'AttendenceScreen');
-            }}>
-            <View style={{width: '20%'}}>
-              <Entypo name="spreadsheet" size={30} color="#ffffff" />
-            </View>
-            <MenuText style={styles.menuItemText}>Attendence</MenuText>
-          </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              navigation.navigate('RouteParentsScreen');
-              refreshRender('Navigating to  1 2 4', 'ParentsScreen');
-            }}>
+          {/* Parents */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              navigation.navigate('RouteParentsScreen' as never);
+              refreshRender('Navigating to Parents', 'ParentsScreen');
+          }}>
             <View style={{width: '20%'}}>
               <Fontisto name="persons" size={30} color="#ffffff" />
             </View>
             <MenuText style={styles.menuItemText}>Parents</MenuText>
           </MenuItem2>
 
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              navigation.navigate('RouteTeachersScreen');
-              refreshRender('Navigating to  1 2 4', 'TeachersScreen');
-            }}>
-            <View style={{width: '20%'}}>
-              <Ionicons name="people" size={30} color="#ffffff" />
-            </View>
-            <MenuText style={styles.menuItemText}>Teachers</MenuText>
-          </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              navigation.navigate('RouteBooksLibraryScreen');
-              refreshRender('Navigating to  1 2 4', 'BooksLibraryScreen');
-            }}>
-            <View style={{width: '20%'}}>
-              <Ionicons name="library" size={30} color="#ffffff" />
-            </View>
-            <MenuText style={styles.menuItemText}>Books Library</MenuText>
-          </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={async () => {
-              // Pass the URL to the external WebView screen via navigation params
-              const token1 = await AsyncStorage.getItem('token1');
-              const lev = await AsyncStorage.getItem('lev');
-
-              console.log('uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu',`https://axcellibrary.schoolmgmtsys.com/?tok=${token1}&lev${lev}`);
-              
-              navigation.navigate('RouteExternalUrlScreen', {
-                url: `https://axcellibrary.schoolmgmtsys.com/?tok=${token1}&lev${lev}`,
-              });
-              refreshRender(
-                'Navigating to external website inside the app',
-                'WebViewScreen',
-              );
-            }}>
-            <View style={{width: '20%'}}>
-              <FontAwesome name="link" size={30} color="#ffffff" />
-            </View>
-            <MenuText style={styles.menuItemText}>eLibrary</MenuText>
-          </MenuItem2>
-
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => navigation.navigate('ExamList')}>
-            <View style={{width: '20%'}}>
-              <Entypo name="list" size={30} color="#ffffff" />
-            </View>
-            <MenuText style={styles.menuItemText}>Exams List</MenuText>
-          </MenuItem2>
-
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              refreshRender('Navigating to  1 2 4', 'ClassScreen');
-              navigation.navigate('RouteClassScreen');
-            }}>
-            <View style={{width: '20%'}}>
-              <Entypo name="list" size={30} color="#ffffff" />
-            </View>
-            <MenuText style={styles.menuItemText}>Class</MenuText>
-          </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              refreshRender('Navigating to  1 2 4', 'GradeLevel');
-              navigation.navigate('RouteGradeLevelScreen');
-            }}>
+          {/* Grade Levels */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              refreshRender('Navigating to Grade Levels', 'GradeLevel');
+              navigation.navigate('RouteGradeLevelScreen' as never);
+          }}>
             <View style={{width: '20%'}}>
               <MaterialIcons name="grade" size={30} color="#ffffff" />
             </View>
             <MenuText style={styles.menuItemText}>Grade Levels</MenuText>
           </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => navigation.navigate('RouteAssigmentScreen')}>
+
+          {/* Assignments */}
+          <MenuItem2 style={styles.menuItem} onPress={() => navigation.navigate('RouteAssigmentScreen' as never)}>
             <View style={{width: '20%'}}>
               <MaterialIcons name="assignment" size={30} color="#ffffff" />
             </View>
             <MenuText style={styles.menuItemText}>Assignments</MenuText>
           </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              navigation.navigate('RouteYearScreen');
-              refreshRender('Navigating to  1 2 4', 'YearScreen');
-            }}>
+
+          {/* Exam List */}
+          <MenuItem2 style={styles.menuItem} onPress={() => navigation.navigate('ExamList' as never)}>
             <View style={{width: '20%'}}>
-              <MaterialIcons name="assignment" size={30} color="#ffffff" />
+              <Entypo name="list" size={30} color="#ffffff" />
             </View>
-            <MenuText style={styles.menuItemText}>Year</MenuText>
+            <MenuText style={styles.menuItemText}>Exam List</MenuText>
           </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              refreshRender('Navigating to  1 2 4', 'TransportScreen');
-              navigation.navigate('RouteTransportScreen');
-            }}>
+
+          {/* Online Exams */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              refreshRender('Navigating to Online Exam', 'OnlineExam')
+              navigation.navigate('OnlineExam' as never)
+          }}>
             <View style={{width: '20%'}}>
-              <MaterialIcons
-                name="emoji-transportation"
-                size={30}
-                color="#ffffff"
-              />
+              <MaterialIcons name="laptop" size={30} color="#ffffff" />
+            </View>
+            <MenuText style={styles.menuItemText}>Online Exams</MenuText>
+          </MenuItem2>
+
+          {/* News Board */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              refreshRender('Navigating to News Board', 'NewsBoard');
+              navigation.navigate('RouteNewsBoardScreen' as never);
+          }}>
+            <View style={{width: '20%'}}>
+              <Entypo name="news" size={30} color="#ffffff" />
+            </View>
+            <MenuText style={styles.menuItemText}>News Board</MenuText>
+          </MenuItem2>
+
+          {/* Events */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              navigation.navigate('RouteEventsScreen' as never);
+              refreshRender('Navigating to Events', 'EventsScreen');
+          }}>
+            <View style={{width: '20%'}}>
+              <Entypo name="thermometer" size={30} color="#ffffff" />
+            </View>
+            <MenuText style={styles.menuItemText}>Events</MenuText>
+          </MenuItem2>
+
+          {/* Invoices */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              refreshRender('Navigating to Invoice', 'InvoiceScreen');
+              navigation.navigate('RouteInvoiceScreen' as never);
+          }}>
+            <View style={{width: '20%'}}>
+              <FontAwesome5 name="file-invoice-dollar" size={30} color="#ffffff" />
+            </View>
+            <MenuText style={styles.menuItemText}>Invoices</MenuText>
+          </MenuItem2>
+
+          {/* Due Invoices */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              refreshRender('Navigating to Due Invoice', 'DueInvoice');
+              navigation.navigate('RouteDueInvoiceScreen' as never);
+          }}>
+            <View style={{width: '20%'}}>
+              <FontAwesome5 name="file-invoice" size={30} color="#ffffff" />
+            </View>
+            <MenuText style={styles.menuItemText}>Due Invoices</MenuText>
+          </MenuItem2>
+
+          {/* Centres - Missing Screen */}
+          <MenuItem2 style={styles.menuItem}>
+            <View style={{width: '20%'}}>
+              <MaterialIcons name="location-city" size={30} color="#ffffff" />
+            </View>
+            <MenuText style={styles.menuItemText}>Centres</MenuText>
+          </MenuItem2>
+
+          {/* Roots Centres - Missing Screen */}
+          <MenuItem2 style={styles.menuItem}>
+            <View style={{width: '20%'}}>
+              <MaterialIcons name="account-tree" size={30} color="#ffffff" />
+            </View>
+            <MenuText style={styles.menuItemText}>Roots Centres</MenuText>
+          </MenuItem2>
+
+          {/* Transport */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              refreshRender('Navigating to Transport', 'TransportScreen');
+              navigation.navigate('RouteTransportScreen' as never);
+          }}>
+            <View style={{width: '20%'}}>
+              <MaterialIcons name="emoji-transportation" size={30} color="#ffffff" />
             </View>
             <MenuText style={styles.menuItemText}>Transport</MenuText>
           </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              navigation.navigate('RouteHostelScreen');
-              refreshRender('Navigating to  1 2 4', 'HostelScreen');
-            }}>
+
+          {/* Hostel */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              navigation.navigate('RouteHostelScreen' as never);
+              refreshRender('Navigating to Hostel', 'HostelScreen');
+          }}>
             <View style={{width: '20%'}}>
               <FontAwesome name="ioxhost" size={30} color="#ffffff" />
             </View>
-            <MenuText style={styles.menuItemText}>Hostels</MenuText>
+            <MenuText style={styles.menuItemText}>Hostel</MenuText>
           </MenuItem2>
-          <MenuItem2
-            style={styles.menuItem}
-            onPress={() => {
-              refreshRender('Navigating to  1 2 4', 'SubjectsScreen');
-              navigation.navigate('RouteSubjectsScreen');
-            }}>
+
+          {/* Media Center */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              navigation.navigate('RouteMediaCenter' as never);
+              refreshRender('Navigating to Media Center', 'MediaCenterScreen');
+          }}>
+            <View style={{width: '20%'}}>
+              <FontAwesome name="align-center" size={30} color="#ffffff" />
+            </View>
+            <MenuText style={styles.menuItemText}>Media Center</MenuText>
+          </MenuItem2>
+
+          {/* Subjects */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              refreshRender('Navigating to Subjects', 'SubjectsScreen');
+              navigation.navigate('RouteSubjectsScreen' as never);
+          }}>
             <View style={{width: '20%'}}>
               <MaterialIcons name="subject" size={30} color="#ffffff" />
             </View>
             <MenuText style={styles.menuItemText}>Subjects</MenuText>
           </MenuItem2>
+
+          {/* Centre Schedule */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              refreshRender('Navigating to Centre Schedule', 'ClassScheduleScreen')
+              navigation.navigate('RouteClassSchdule' as never)
+          }}>
+            <View style={{width: '20%'}}>
+              <MaterialIcons name="schedule" size={30} color="#ffffff" />
+            </View>
+            <MenuText style={styles.menuItemText}>Centre Schedule</MenuText>
+          </MenuItem2>
+
+          {/* Study Material */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              refreshRender('Navigating to Study Material', 'ResourceAndGuideScreen')
+              navigation.navigate('RouteResourceAndGuideScreen' as never)
+          }}>
+            <View style={{width: '20%'}}>
+              <MaterialIcons name="book" size={30} color="#ffffff" />
+            </View>
+            <MenuText style={styles.menuItemText}>Study Material</MenuText>
+          </MenuItem2>
+
+          {/* Logout */}
           <MenuItem2 style={styles.menuItem} onPress={() => handleLogout()}>
             <View style={{width: '20%'}}>
-              <MaterialIcons name="subject" size={30} color="#ffffff" />
+              <MaterialIcons name="logout" size={30} color="#ffffff" />
             </View>
-
             <MenuText style={styles.menuItemText}>Logout</MenuText>
           </MenuItem2>
         </ScrollView>
       </Container>
     </ImageBackground>
-  );
-};
+  );};
 
 export default SideBarAdmin;
 

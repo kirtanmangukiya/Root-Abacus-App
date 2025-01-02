@@ -57,7 +57,6 @@ const DrawerRoutes: React.FC<DrawerRoutesProps> = ({route}) => {
 
   return (
     <Drawer.Navigator
-      name="MainStack"
       initialRouteName="RouteDashBoardScreen"
       drawerContent={props => {
         switch (moduleType) {
@@ -81,83 +80,91 @@ const DrawerRoutes: React.FC<DrawerRoutesProps> = ({route}) => {
           backgroundColor: 'white',
         },
       }}>
-      <Drawer.Screen
-        name="RouteDashBoardScreen"
-        component={RouteDashBoardScreen}
-      />
-      <Drawer.Screen
-        name="RouteNewsBoardScreen"
-        component={RouteNewsBoardScreen}
-      />
+      {/* Order starts here */}
 
+      {/* Dashboard */}
+      <Drawer.Screen name="RouteDashBoardScreen" component={RouteDashBoardScreen} />
+
+      {/* Static Pages */}
+      <Drawer.Screen name="RouteExternalUrlScreen" component={RouteExternalUrlScreen} />
+
+      {/* Messages */}
+      <Drawer.Screen name="RouteMessage" component={RouteMessage} />
+
+      {/* Calendar */}
+      <Drawer.Screen name="RouteCalender" component={RouteCalender} />
+
+      {/* Homework */}
+      <Drawer.Screen name="RouteHomeworkScreen" component={RouteHomeworkScreen} />
+
+      {/* Attendance */}
+      <Drawer.Screen name="RouteAttendenceScreen" component={RouteAttendenceScreen} />
+
+      {/* Staff Attendance */}
+      {/* Missing: Implement staff attendance screen */}
+
+      {/* Books Library */}
+      <Drawer.Screen name="RouteBooksLibraryScreen" component={RouteBooksLibraryScreen} />
+
+      {/* Teacher */}
+      <Drawer.Screen name="RouteTeachersScreen" component={RouteTeachersScreen} />
+
+      {/* Student */}
+      <Drawer.Screen name="RouteStudentScreen" component={RouteStudentScreen} />
+
+      {/* Parents */}
+      <Drawer.Screen name="RouteParentsScreen" component={RouteParentsScreen} />
+
+      {/* Grade Levels */}
+      <Drawer.Screen name="RouteGradeLevelScreen" component={RouteGradeLevelScreen} />
+
+      {/* Assignments */}
+      <Drawer.Screen name="RouteAssigmentScreen" component={RouteAssigmentScreen} />
+
+      {/* Exam List */}
+      <Drawer.Screen name="ExamList" component={ExamList} />
+
+      {/* Online Exams */}
+      <Drawer.Screen name="OnlineExam" component={OnlineExam} />
+
+      {/* News Board */}
+      <Drawer.Screen name="RouteNewsBoardScreen" component={RouteNewsBoardScreen} />
+
+      {/* Events */}
       <Drawer.Screen name="RouteEventsScreen" component={RouteEventsScreen} />
+
+      {/* Invoices */}
+      <Drawer.Screen name="RouteInvoiceScreen" component={RouteInvoiceScreen} />
+
+      {/* Due Invoices */}
+      <Drawer.Screen name="RouteDueInvoiceScreen" component={RouteDueInvoiceScreen} />
+
+      {/* Centres */}
+      {/* Missing: Implement centres screen */}
+
+      {/* Roots Centres */}
+      {/* Missing: Implement roots centres screen */}
+
+      {/* Transport */}
+      <Drawer.Screen name="RouteTransportScreen" component={RouteTransportScreen} />
+
+      {/* Hostel */}
+      <Drawer.Screen name="RouteHostelScreen" component={RouteHostelScreen} />
+
+      {/* Media Center */}
+      <Drawer.Screen name="RouteMediaCenter" component={RouteMediaCenter} />
+
+      {/* Subjects */}
+      <Drawer.Screen name="RouteSubjectsScreen" component={RouteSubjectsScreen} />
+
+      {/* Centre Schedule */}
       <Drawer.Screen name="RouteClassSchdule" component={RouteClassSchdule} />
 
-      <Drawer.Screen name="RouteStudentScreen" component={RouteStudentScreen} />
-      <Drawer.Screen name="RouteInvoiceScreen" component={RouteInvoiceScreen} />
-      <Drawer.Screen name="RouteMessage" component={RouteMessage} />
-      <Drawer.Screen
-        name="RouteDueInvoiceScreen"
-        component={RouteDueInvoiceScreen}
-      />
-      <Drawer.Screen
-        name="RouteHomeworkScreen"
-        component={RouteHomeworkScreen}
-      />
-      <Drawer.Screen
-        name="RouteAttendenceScreen"
-        component={RouteAttendenceScreen}
-      />
-      <Drawer.Screen name="RouteParentsScreen" component={RouteParentsScreen} />
-      <Drawer.Screen
-        name="RouteTeachersScreen"
-        component={RouteTeachersScreen}
-      />
-      <Drawer.Screen
-        name="RouteBooksLibraryScreen"
-        component={RouteBooksLibraryScreen}
-      />
-      <Drawer.Screen
-        name="RouteExternalUrlScreen"
-        component={RouteExternalUrlScreen}
-      />
-      <Drawer.Screen name="RouteYearScreen" component={RouteYearScreen} />
-      <Drawer.Screen
-        name="RouteGradeLevelScreen"
-        component={RouteGradeLevelScreen}
-      />
-      <Drawer.Screen
-        name="RouteAssigmentScreen"
-        component={RouteAssigmentScreen}
-      />
-      <Drawer.Screen
-        name="RouteTransportScreen"
-        component={RouteTransportScreen}
-      />
-      <Drawer.Screen name="RouteHostelScreen" component={RouteHostelScreen} />
-      <Drawer.Screen
-        name="RouteSubjectsScreen"
-        component={RouteSubjectsScreen}
-      />
-      <Drawer.Screen name="ExamList" component={ExamList} />
-      <Drawer.Screen name="OnlineExam" component={OnlineExam} />
-      <Drawer.Screen name="RouteClassScreen" component={RouteClassScreen} />
-      <Drawer.Screen name="Login" component={LoginScreen} />
+      {/* Study Material */}
+      <Drawer.Screen name="RouteResourceAndGuideScreen" component={RouteResourceAndGuideScreen} />
 
-      <Drawer.Screen name="Splash" component={SplashScreen} />
-      
-      <Drawer.Screen
-        name="RouteResourceAndGuideScreen"
-        component={RouteResourceAndGuideScreen}
-      />
-      <Drawer.Screen
-        name="RouteCreditNotesScreen"
-        component={RouteCreditNotesScreen}
-      />
-      {/* <Drawer.Screen name="ShowDataScreen" component={ShowDataScreen} /> */}
-      <Drawer.Screen name="RouteCalender" component={RouteCalender} />
-      <Drawer.Screen name="RouteMediaCenter" component={RouteMediaCenter} />
-     
+      {/* Logout */}
+      <Drawer.Screen name="Login" component={LoginScreen} />
     </Drawer.Navigator>
   );
 };
