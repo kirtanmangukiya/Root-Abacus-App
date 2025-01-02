@@ -65,7 +65,7 @@ const TeachersScreen: React.FC = () => {
     console.log('Refresh icon pressed');
     setRefreshing(true);
     setCurrentPage(1);
-    setResults(undefined); // Clear the results to load full data
+    setResults(undefined);
     loadData(1);
   }, []);
 
@@ -89,7 +89,7 @@ const TeachersScreen: React.FC = () => {
       }
 
       const response = await TeacherData(page);
-      const itemsPerPage = response.itemsPerPage || 10; // Use API's itemsPerPage or default to 10
+      const itemsPerPage = response.itemsPerPage || 10;
 
       if (page === 1) {
         setData(response);
@@ -99,7 +99,6 @@ const TeachersScreen: React.FC = () => {
             return response;
           }
 
-          // Check for duplicates by item id
           const newTeachers = response.teachers.filter(
             newTeacher =>
               !prevData.teachers.some(
@@ -156,7 +155,7 @@ const TeachersScreen: React.FC = () => {
   }, [appState]);
 
   const renderItem = ({item}: {item: TeacherProfileProps}) => (
-    <View style={{marginVertical: 5, marginHorizontal: 1}}>
+    <View style={styles.itemContainer}>
       <TeacherComponent data={item} userRole={data?.userRole} />
     </View>
   );
@@ -165,7 +164,7 @@ const TeachersScreen: React.FC = () => {
     if (!isLoadingMore) return null;
     return (
       <View style={styles.activityIndicatorContainer}>
-        <ActivityIndicator size="large" color="#ffffff" />
+        <ActivityIndicator size="large" color="#0066cc" />
       </View>
     );
   };
@@ -187,7 +186,7 @@ const TeachersScreen: React.FC = () => {
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           refreshControl={
             <RefreshControl
-              colors={['#ffffff']}
+              colors={['#0066cc']}
               refreshing={refreshing}
               onRefresh={handleRefreshPress}
             />
@@ -210,7 +209,7 @@ const TeachersScreen: React.FC = () => {
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           refreshControl={
             <RefreshControl
-              colors={['#ffffff']}
+              colors={['#0066cc']}
               refreshing={refreshing}
               onRefresh={handleRefreshPress}
             />
@@ -235,12 +234,7 @@ const TeachersScreen: React.FC = () => {
           onRefreshPress={handleRefreshPress}
           onMenuPress={handleMenuPress}
         />
-        <View
-          style={{
-            marginHorizontal: '3%',
-            flex: 1,
-            justifyContent: 'center',
-          }}>
+        <View style={styles.mainContent}>
           <View style={styles.content}>{renderContent()}</View>
         </View>
       </View>
@@ -269,8 +263,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  mainContent: {
+    marginHorizontal: '3%',
+    flex: 1,
+    justifyContent: 'center',
+  },
   separator: {
     height: 10,
+  },
+  itemContainer: {
+    marginVertical: 5,
+    marginHorizontal: 1,
+    backgroundColor: '#ffffff',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
 

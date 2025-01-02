@@ -8,6 +8,7 @@ import {
   RefreshControl,
   AppState,
   Dimensions,
+  Alert,
 } from 'react-native';
 import TopBar from '../components/TopBar';
 import BooksLibraryComponent from './BooksLibraryComponent';
@@ -20,6 +21,7 @@ import NoDataFound from '../components/no_data_found/NoDataFound';
 import NetInfo from '@react-native-community/netinfo';
 import Toast from 'react-native-toast-message';
 import Pdf from 'react-native-pdf';
+import {RouteProp} from '@react-navigation/native';
 
 type InvoiceScreenNavigationProp = NativeStackNavigationProp<
   MainStackParamList,
@@ -89,7 +91,7 @@ const BooksLibraryScreen: React.FC = () => {
   };
 
   const renderItem = ({item}: {item: bookSlibrarayItem}) => (
-    <View style={{marginVertical: 5}}>
+    <View style={styles.itemContainer}>
       <BooksLibraryComponent data={item} />
     </View>
   );
@@ -123,8 +125,11 @@ const BooksLibraryScreen: React.FC = () => {
 
   useEffect(() => {
     if (results) {
-      // If results are passed, use them initially
-      setData({bookLibrary: results});
+      setData({
+        bookLibrary: results,
+        userRole: '',
+        totalItems: results.length,
+      });
       setLoading(false);
     } else {
       loadData(); // Otherwise, fetch full data from the API
@@ -151,7 +156,7 @@ const BooksLibraryScreen: React.FC = () => {
           title="Books Library"
           onSearchPress={handleSearchPress}
           onRefreshPress={handleRefreshPress}
-          onMenuPress={results ? null : handleMenuPress}
+          onMenuPress={results ? undefined : handleMenuPress}
         />
         <View style={styles.content}>
           {viewingPdf ? (
@@ -185,7 +190,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    paddingVertical: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+  },
+  itemContainer: {
+    marginVertical: 8,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   loadingContainer: {
     flex: 1,
@@ -195,6 +214,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     bottom: 10,
+    paddingHorizontal: 10,
   },
   activityIndicatorContainer: {
     flex: 1,
@@ -204,6 +224,7 @@ const styles = StyleSheet.create({
   pdf: {
     flex: 1,
     width: Dimensions.get('window').width,
+    backgroundColor: '#FFFFFF',
   },
 });
 

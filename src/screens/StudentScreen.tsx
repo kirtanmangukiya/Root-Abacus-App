@@ -165,7 +165,8 @@ const StudentScreen: React.FC = () => {
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         refreshControl={
           <RefreshControl
-            colors={['#ffffff']}
+            colors={['#2196F3']}
+            tintColor="#2196F3"
             refreshing={refreshing}
             onRefresh={handleRefresh}
           />
@@ -200,7 +201,9 @@ const StudentScreen: React.FC = () => {
           onRefreshPress={handleRefresh}
           onMenuPress={handleMenuPress}
         />
-        <View style={styles.content}>{renderContent()}</View>
+        <View style={[styles.content, styles.contentBackground]}>
+          {renderContent()}
+        </View>
       </View>
     </ImageBackground>
   );
@@ -233,7 +236,8 @@ const styles = StyleSheet.create({
   footerContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16, // Adjust padding as needed
+    padding: 16,
+    backgroundColor: 'transparent',
   },
 });
 

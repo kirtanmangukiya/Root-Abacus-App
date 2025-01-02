@@ -97,7 +97,7 @@ const AttendanceCard: React.FC<AttendanceCardProps> = ({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: '#f8f9fa',
     borderRadius: wp('2%'),
     padding: wp('4%'),
     marginBottom: hp('2%'),
@@ -105,6 +105,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: wp('2%'),
     elevation: 4,
+    borderWidth: 1,
+    borderColor: '#e9ecef',
   },
   header: {
     flexDirection: 'row',
@@ -114,10 +116,12 @@ const styles = StyleSheet.create({
   name: {
     fontSize: wp('4%'),
     fontWeight: 'bold',
+    color: '#212529',
   },
   admissionNumber: {
     fontSize: wp('4%'),
     fontWeight: 'bold',
+    color: '#495057',
   },
   body: {
     marginBottom: hp('2%'),
@@ -125,9 +129,11 @@ const styles = StyleSheet.create({
   attendanceLabel: {
     fontSize: wp('3.5%'),
     fontWeight: 'bold',
+    color: '#343a40',
   },
   attendanceValue: {
     fontSize: wp('3.5%'),
+    color: '#495057',
   },
   buttonsContainer: {
     flexDirection: 'column',
@@ -141,19 +147,23 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: wp('1%'),
     padding: wp('2%'),
-    backgroundColor: '#ddd',
+    backgroundColor: '#e9ecef',
     alignItems: 'center',
     borderRadius: wp('2%'),
+    borderWidth: 1,
+    borderColor: '#dee2e6',
   },
   selectedButton: {
     backgroundColor: '#212463',
+    borderColor: '#212463',
   },
   buttonText: {
     fontSize: wp('3.5%'),
     fontWeight: 'bold',
+    color: '#495057',
   },
   selectedButtonText: {
-    color: '#fff',
+    color: '#ffffff',
   },
 });
 

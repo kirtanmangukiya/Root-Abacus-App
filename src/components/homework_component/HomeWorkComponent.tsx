@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import styled from 'styled-components/native';
 import RNFetchBlob from 'rn-fetch-blob';
-import {Homework} from '../../types'; // Ensure this import is correct
+import {Homework} from '../../types';
 import {StackActions, useNavigation} from '@react-navigation/native';
 
 const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
@@ -25,26 +25,32 @@ interface NewsBoardProps {
 
 const Container = styled.TouchableOpacity`
   padding: ${screenWidth * 0.05}px;
-  background-color: white;
+  background-color: #f5f5f5;
   border-radius: ${screenWidth * 0.03}px;
   margin: ${screenWidth * 0.025}px ${screenWidth * 0.05}px;
+  border: 1px solid #e0e0e0;
+  elevation: 2;
 `;
 
 const HeaderText = styled.Text`
   font-size: ${screenWidth * 0.055}px;
   font-weight: bold;
-  color: black;
+  color: #333333;
   margin-bottom: ${screenHeight * 0.005}px;
 `;
 
 const SubHeaderText = styled.Text`
   font-size: ${screenWidth * 0.04}px;
   margin-bottom: ${screenHeight * 0.025}px;
+  color: #666666;
 `;
 
 const Row = styled.View`
   flex-direction: row;
   align-items: center;
+  background-color: #ffffff;
+  padding: ${screenWidth * 0.02}px;
+  border-radius: ${screenWidth * 0.02}px;
 `;
 
 const ImageView = styled.Image`
@@ -60,16 +66,17 @@ const DateView = styled.View`
 const AboveDateText = styled.Text`
   font-size: ${screenWidth * 0.045}px;
   font-weight: bold;
-  color: black;
+  color: #444444;
 `;
 
 const CurrentDateText = styled.Text`
   font-size: ${screenWidth * 0.04}px;
+  color: #666666;
 `;
 
 interface BooksLibraryDataItem {
   data: Homework;
-  navigation: any; // Adjust type as needed for navigation
+  navigation: any;
 }
 
 const HomeWorkComponent: React.FC<BooksLibraryDataItem> = ({data}) => {
@@ -181,6 +188,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: screenHeight * 0.015,
   },
   downloadButton: {
     height: screenHeight * 0.05,
@@ -196,16 +204,17 @@ const styles = StyleSheet.create({
     borderRadius: screenWidth * 0.1,
     paddingVertical: screenHeight * 0.005,
     paddingHorizontal: screenWidth * 0.02,
+    backgroundColor: '#f0f0f0',
   },
   amount: {
     fontSize: screenWidth * 0.03,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#333333',
     marginLeft: screenWidth * 0.01,
   },
   amountLabel: {
     fontSize: screenWidth * 0.03,
-    color: 'white',
+    color: '#333333',
     fontWeight: 'bold',
   },
 });

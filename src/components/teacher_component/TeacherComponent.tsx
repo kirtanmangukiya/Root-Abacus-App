@@ -18,23 +18,22 @@ const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
 const Container = styled.View`
   /* padding-left: 10px; */
   /* padding-right: 100px; */
-  background-color: white;
+  background-color: #f5f5f5;
   border-radius: 10px;
-
+  elevation: 3;
+  margin: 8px;
   /* padding-left: 10px; */
   /* margin: 10px 40px; */
 `;
 
 const ProfileContainer = styled.View`
   align-items: center;
-
   flex-direction: row;
   margin-bottom: 20px;
   padding-left: 40px;
   /* padding-right: 15px; */
   margin-top: 10px;
   justify-content: space-evenly;
-
   /* width: 100; */
 `;
 
@@ -56,7 +55,7 @@ const ProfileImage2 = styled.Image`
 const NameText = styled.Text`
   font-size: 18px;
   bottom: 7px;
-  color: black;
+  color: #333333;
   font-weight: bold;
 `;
 
@@ -80,6 +79,7 @@ const InfoTextContainer = styled.View`
   /* margin-left: 10px; */
   /* justify-content: space-evenly; */
 `;
+
 const MeritListShow = styled.View`
   margin-left: 60px;
   margin-bottom: 10px;
@@ -87,19 +87,18 @@ const MeritListShow = styled.View`
 
 const InfoText = styled.Text`
   font-size: 16px;
-
   bottom: 2px;
   font-weight: bold;
-  color: black;
+  color: #333333;
 `;
 
 const SubText = styled.Text`
   font-size: 14px;
-  color: gray;
+  color: #666666;
 `;
+
 const ChildComponent = styled.View`
   flex-direction: column;
-
   /* background-color: red; */
   justify-content: space-evenly;
 `;
@@ -161,7 +160,6 @@ const TeacherComponent: React.FC<TeacherProfileProps> = ({data, userRole}) => {
           marginBottom: '4%',
           marginTop: '4%',
           marginLeft: '5%',
-
           flexDirection: 'row',
         }}>
         <Image
@@ -291,7 +289,6 @@ const styles = StyleSheet.create({
     width: screenWidth * 0.05,
     height: screenHeight * 0.03,
   },
-
   modalContainer: {
     width: 300,
     padding: 20,
@@ -311,6 +308,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#333333',
   },
   textInput: {
     width: '100%',
@@ -319,6 +317,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
+    backgroundColor: '#ffffff',
   },
   modalBackground2: {
     flex: 1,
@@ -341,9 +340,10 @@ const styles = StyleSheet.create({
     marginVertical: 20, // Increased spacing from the LottieView
     fontSize: 18, // Adjust font size as needed
     fontWeight: 'bold',
+    color: '#333333',
   },
   okButton: {
-    color: 'blue',
+    color: '#2596be',
     fontWeight: 'bold',
   },
   lottieView: {

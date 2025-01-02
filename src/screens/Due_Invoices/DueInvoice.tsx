@@ -12,6 +12,7 @@ import {
   StackActions,
   useNavigation,
   useRoute,
+  useIsFocused,
 } from '@react-navigation/native';
 import {InvoiceItemResponce, MainStackParamList} from '../../types';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
@@ -35,6 +36,7 @@ const DueInvoice: React.FC = () => {
   const navigation = useNavigation<InvoiceScreenNavigationProp>();
   const route = useRoute();
   const results = route.params?.results;
+  const isFocused = useIsFocused();
 
   const [loading, setLoading] = useState<boolean>(!results);
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -45,15 +47,38 @@ const DueInvoice: React.FC = () => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
   const [appState, setAppState] = useState(AppState.currentState);
+  const [initialLoad, setInitialLoad] = useState(true);
+
+  const handleInvoiceChange = useCallback(() => {
+    handleRefreshPress();
+  }, []);
 
   useEffect(() => {
-    if (!results) {
-      checkInternetAndFetchData();
+    if (isFocused) {
+      loadData();
     }
+  }, [isFocused]);
 
+  useEffect(() => {
+    if (!results && initialLoad) {
+      checkInternetAndFetchData();
+      setInitialLoad(false);
+    }
+  }, [results, initialLoad]);
+
+  useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
-      if (appState.match(/inactive|background/) && nextAppState === 'active') {
-        checkInternetAndFetchData();
+      if (
+        appState.match(/inactive|background/) && 
+        nextAppState === 'active' && 
+        isFocused && 
+        !results
+      ) {
+        NetInfo.fetch().then(state => {
+          if (state.isConnected) {
+            loadData();
+          }
+        });
       }
       setAppState(nextAppState);
     });
@@ -61,7 +86,7 @@ const DueInvoice: React.FC = () => {
     return () => {
       subscription.remove();
     };
-  }, [appState, results]);
+  }, [appState, isFocused, results]);
 
   const checkInternetAndFetchData = async () => {
     const netInfoState = await NetInfo.fetch();
@@ -81,8 +106,12 @@ const DueInvoice: React.FC = () => {
     }
   };
 
-  const loadData = async () => {
-    setLoading(true); // Start loading indicator
+  const loadData = async (loadMore = false) => {
+    if (!isFocused) return;
+    
+    if (!loadMore) {
+      setLoading(true);
+    }
 
     try {
       const tokenString = await AsyncStorage.getItem('loginData');
@@ -92,10 +121,8 @@ const DueInvoice: React.FC = () => {
 
       const loginData = JSON.parse(tokenString);
 
-      const data = await DueInvoiceData(); // Directly call the API function
-      // console.log('Data of invoice:', data);
+      const data = await DueInvoiceData();
 
-      // Safeguard: Ensure data exists and has 'invoices' field
       if (!data || !data.invoices) {
         console.error(
           'Data or invoices field is missing in the response:',
@@ -105,30 +132,6 @@ const DueInvoice: React.FC = () => {
       }
 
       const invoices = data.invoices || [];
-
-      // const dueInvoices = invoices.filter(
-      //   (invoice: {
-      //     fullName: null;
-      //     paymentStatus: number;
-      //     dueDate: {split: (arg0: string) => [any, any, any]};
-      //     invoicePyaments: {paymentStatus: number}[];
-      //   }) => {
-      //     // Current time in seconds
-      //     const currentTime = Math.floor(Date.now() / 1000);
-      //     const [month, day, year] = invoice.dueDate.split('/');
-
-      //     // Create a Date object with the appropriate month (0-indexed)
-      //     const dueDate = new Date(
-      //       Number(year),
-      //       Number(month) - 1,
-      //       Number(day),
-      //     );
-      //     const dueDateTimestamp = Math.floor(dueDate.getTime() / 1000);
-      //     // const paymentStatus = invoice.invoicePyaments?.[0]?.paymentStatus;
-      //     return dueDateTimestamp < currentTime && invoice?.paymentStatus !== 1;
-      //   },
-      // );
-    
       setInvoiceData(invoices);
     } catch (error) {
       console.error('Error loading data:', error);
@@ -138,8 +141,8 @@ const DueInvoice: React.FC = () => {
         text2: 'Failed to load data from the server.',
       });
     } finally {
-      setLoading(false); // Stop loading indicator
-      setRefreshing(false); // Stop refreshing indicator if using pull-to-refresh
+      setLoading(false);
+      setRefreshing(false);
     }
   };
 
@@ -148,9 +151,9 @@ const DueInvoice: React.FC = () => {
       route.params.results = undefined;
     }
     setRefreshing(true);
-    setPage(1); // Reset the page to 1 when refreshing
-    setHasMore(true); // Reset the hasMore flag when refreshing
-    loadData(); // Load data regardless of the initial results
+    setPage(1);
+    setHasMore(true);
+    loadData();
   }, []);
 
   const handleMenuPress = useCallback(() => {
@@ -160,10 +163,14 @@ const DueInvoice: React.FC = () => {
   const renderItem = useCallback(
     ({item}: {item: InvoiceItemResponce}) => (
       <View style={{marginVertical: 10, marginHorizontal: 15}}>
-        <InvoiceComponent data={item} />
+        <InvoiceComponent 
+          data={item} 
+          onInvoiceChange={handleInvoiceChange}
+          key={item.id + Date.now()} // Add a unique key that changes when data updates
+        />
       </View>
     ),
-    [],
+    [handleInvoiceChange],
   );
 
   const renderContent = useMemo(() => {
@@ -188,7 +195,7 @@ const DueInvoice: React.FC = () => {
         <FlatList
           data={invoiceData}
           renderItem={renderItem}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={item => `${item.id}-${Date.now()}`} // Update keyExtractor to ensure uniqueness
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.listContent}
           refreshControl={
@@ -203,6 +210,7 @@ const DueInvoice: React.FC = () => {
           initialNumToRender={10}
           windowSize={21}
           maxToRenderPerBatch={10}
+          extraData={invoiceData} // Add extraData prop to force re-render when data changes
         />
         {loadingMore && invoiceData.length > 0 && (
           <View style={styles.footer}>
