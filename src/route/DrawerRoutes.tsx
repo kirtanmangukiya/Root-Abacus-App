@@ -1,22 +1,28 @@
 // src/route/DrawerRoutes.tsx
-
+import React from 'react';
+import {DrawerNavigationProp} from '@react-navigation/drawer';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 
+import PdfShowComponent2 from '../components/pdf_show_component/PdfShowComponent2';
+import SideBarAdmin from '../components/side_bar/SideBarAdmin';
+import SideBarEmployee from '../components/side_bar/SideBarEmployee';
+import SideBarParent from '../components/side_bar/SideBarParent';
+import SideBarStudent from '../components/side_bar/SideBarStudent';
+import SideBarTeacher from '../components/side_bar/SideBarTeacher';
 import ClassScreen from '../screens/class/ClassScreen';
-import {DrawerNavigationProp} from '@react-navigation/drawer';
 import ExamList from '../screens/Exam_List/ExamList';
 import LoginScreen from '../screens/Login';
-import {MainStackParamList} from '../types';
 import MediaCenterScreen from '../screens/MediaCenterScreen';
 import OnlineExam from '../screens/online_exam/OnlineExam';
-import PdfShowComponent2 from '../components/pdf_show_component/PdfShowComponent2';
-import React from 'react';
+import SplashScreen from '../screens/SplashScreen';
+import {MainStackParamList} from '../types';
+import RouteClassScreen from './routeScreen/RoutClassScreen';
 import RouteAssigmentScreen from './routeScreen/RouteAssignmnetScreen';
 import RouteAttendenceScreen from './routeScreen/RouteAttendenceScreen';
 import RouteBooksLibraryScreen from './routeScreen/RouteBooksLibraryScreen';
 import RouteCalender from './routeScreen/RouteCalender';
 import RouteClassSchdule from './routeScreen/RouteClassSchdule';
-import RouteClassScreen from './routeScreen/RoutClassScreen';
 import RouteCreditNotesScreen from './routeScreen/RouteCreditNotesScreen';
 import RouteDashBoardScreen from './routeScreen/RouteDashBoardScreen';
 import RouteDueInvoiceScreen from './routeScreen/RouteDueInvoiceScreen';
@@ -36,13 +42,6 @@ import RouteSubjectsScreen from './routeScreen/RouteSubjectsScreen';
 import RouteTeachersScreen from './routeScreen/RouteTeachersScreen';
 import RouteTransportScreen from './routeScreen/RouteTransportScreen';
 import RouteYearScreen from './routeScreen/RouteYearScreen';
-import SideBarAdmin from '../components/side_bar/SideBarAdmin';
-import SideBarEmployee from '../components/side_bar/SideBarEmployee';
-import SideBarParent from '../components/side_bar/SideBarParent';
-import SideBarStudent from '../components/side_bar/SideBarStudent';
-import SideBarTeacher from '../components/side_bar/SideBarTeacher';
-import SplashScreen from '../screens/SplashScreen';
-import {createDrawerNavigator} from '@react-navigation/drawer';
 
 const Drawer = createDrawerNavigator<MainStackParamList>();
 
@@ -140,8 +139,8 @@ const DrawerRoutes: React.FC<DrawerRoutesProps> = ({route}) => {
       <Drawer.Screen name="RouteDueInvoiceScreen" component={RouteDueInvoiceScreen} />
 
       {/* Centres */}
-      {/* Missing: Implement centres screen */}
-
+      <Drawer.Screen name="RouteCentreScreen" component={RouteClassScreen} />
+      
       {/* Roots Centres */}
       {/* Missing: Implement roots centres screen */}
 

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-
+import React, {ComponentType, FC} from 'react';
 import {
   Alert,
   Dimensions,
@@ -8,20 +8,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import {
-  CommonActions,
-  useIsFocused,
-  useNavigation,
-} from '@react-navigation/native';
-import {
-  DrawerContentComponentProps,
-  DrawerContentScrollView,
-} from '@react-navigation/drawer';
-import React, {ComponentType, FC} from 'react';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -30,6 +18,16 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import WebView from 'react-native-webview';
 import styled from 'styled-components/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  DrawerContentComponentProps,
+  DrawerContentScrollView,
+} from '@react-navigation/drawer';
+import {
+  CommonActions,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 
 // Get screen dimensions
 const {width, height} = Dimensions.get('window');
@@ -388,14 +386,16 @@ const SideBarAdmin: FC<SideBarProps> = props => {
             <MenuText style={styles.menuItemText}>Due Invoices</MenuText>
           </MenuItem2>
 
-          {/* Centres - Missing Screen */}
-          <MenuItem2 style={styles.menuItem}>
+          {/* Centres */}
+          <MenuItem2 style={styles.menuItem} onPress={() => {
+              refreshRender('Navigating to Centres', 'CentresScreen');
+              navigation.navigate('RouteCentreScreen' as never);
+          }}>
             <View style={{width: '20%'}}>
               <MaterialIcons name="location-city" size={30} color="#ffffff" />
             </View>
             <MenuText style={styles.menuItemText}>Centres</MenuText>
           </MenuItem2>
-
           {/* Roots Centres - Missing Screen */}
           <MenuItem2 style={styles.menuItem}>
             <View style={{width: '20%'}}>
