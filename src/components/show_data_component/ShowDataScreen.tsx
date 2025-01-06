@@ -1,6 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
-import {ImageBackground} from 'react-native';
+import {ImageBackground, StyleSheet} from 'react-native';
 import {RootStackParamList} from '../../types';
 import NoDataFound from '../no_data_found/NoDataFound';
 import TopBar from '../TopBar';
@@ -18,7 +18,7 @@ const ShowDataScreen: React.FC<Props> = ({route}) => {
 
   return (
     <ImageBackground
-      style={{flex: 1}}
+      style={styles.container}
       source={require('../../assest/icons/SideBarBg.jpg')} // Ensure the correct path
     >
       <TopBar
@@ -29,5 +29,15 @@ const ShowDataScreen: React.FC<Props> = ({route}) => {
     </ImageBackground>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+  },
+});
 
 export default ShowDataScreen;

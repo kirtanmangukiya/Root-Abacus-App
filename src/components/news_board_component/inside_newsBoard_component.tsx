@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'gray',
     padding: 10,
     borderRadius: 10,
   },

@@ -32,7 +32,7 @@ const ExamList: React.FC = () => {
           onMenuPress={handleMenuPress} // Add the menu press handler here
         />
         <View style={styles.content}>
-          <NoDataFound noFoundTitle="NO DATA FOUND" />
+          <NoDataFound noFoundTitle="NO Exams" />
           {/* Add your specific content here */}
         </View>
       </View>

@@ -125,7 +125,7 @@ const AssignmentUploadList = () => {
         <View style={styles.row}>
           <Image
             source={require('../../assest/icons/icon_pages_class.png')}
-            style={{width: 30, height: 30}}
+            style={styles.iconStyle}
           />
           <View style={styles.textContainer}>
             <Text style={styles.label}>Class</Text>
@@ -138,7 +138,7 @@ const AssignmentUploadList = () => {
         <View style={styles.row}>
           <Image
             source={require('../../assest/icons/icon_pages_date.png')}
-            style={{width: 30, height: 30}}
+            style={styles.iconStyle}
           />
           <View style={styles.textContainer}>
             <Text style={styles.label}>Time Applied</Text>
@@ -149,7 +149,7 @@ const AssignmentUploadList = () => {
         <View style={styles.row}>
           <Image
             source={require('../../assest/icons/icon_pages_notes.png')}
-            style={{width: 30, height: 30}}
+            style={styles.iconStyle}
           />
           <View style={styles.textContainer}>
             <Text style={styles.label}>Notes</Text>
@@ -189,6 +189,7 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingBottom: 100,
+    paddingHorizontal: 10,
   },
   noDataContainer: {
     flex: 1,
@@ -202,18 +203,19 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   profileImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 50,
-    marginRight: 10,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 12,
   },
   header2: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 15,
+    padding: 16,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+    backgroundColor: '#f8f9fa',
   },
   headerContent: {
     flex: 1,
@@ -221,47 +223,60 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#2c3e50',
+    marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
+    color: '#666',
   },
   downloadButton: {
     backgroundColor: '#007AFF',
-    padding: 10,
-    borderRadius: 50,
+    padding: 12,
+    borderRadius: 25,
+    elevation: 3,
   },
   card: {
     backgroundColor: '#ffffff',
-    borderRadius: 10,
-    margin: 10,
+    borderRadius: 15,
+    margin: 8,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
     elevation: 5,
     overflow: 'hidden',
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
-    paddingHorizontal: 15,
+    marginVertical: 12,
+    paddingHorizontal: 16,
+  },
+  iconStyle: {
+    width: 32,
+    height: 32,
+    resizeMode: 'contain',
   },
   textContainer: {
-    marginLeft: 10,
+    marginLeft: 12,
+    flex: 1,
   },
   label: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#333',
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#34495e',
+    marginBottom: 4,
   },
   value: {
     fontSize: 14,
     color: '#555',
+    lineHeight: 20,
   },
   separator: {
     height: 1,
-    backgroundColor: '#f0f0f0',
-    marginHorizontal: 15,
+    backgroundColor: '#e0e0e0',
+    marginHorizontal: 16,
+    marginVertical: 8,
   },
 });
