@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   View,
   FlatList,
@@ -7,15 +7,16 @@ import {
   RefreshControl,
   AppState,
 } from 'react-native';
-import {useNavigation, DrawerActions, StackActions, useRoute, RouteProp} from '@react-navigation/native';
-import NoDataFound from '../../components/no_data_found/NoDataFound';
-import YearlyComponent from '../../components/yearly_component/yearly_component';
-import TopBar from '../../components/TopBar';
-import {classData} from '../../config/axios';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import ActivityIndacatorr from '../../components/activity_indicator/ActivityIndacatorr';
-import NetInfo from '@react-native-community/netinfo';
 import Toast from 'react-native-toast-message';
+import NetInfo from '@react-native-community/netinfo';
+import { useNavigation, DrawerActions, StackActions, useRoute, RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+import ActivityIndacatorr from '../../components/activity_indicator/ActivityIndacatorr';
+import NoDataFound from '../../components/no_data_found/NoDataFound';
+import TopBar from '../../components/TopBar';
+import YearlyComponent from '../../components/yearly_component/yearly_component';
+import { classData } from '../../config/axios';
 import {
   classApiResponce,
   ClassAssignment,
@@ -26,6 +27,7 @@ type YearScreenNavigationProp = NativeStackNavigationProp<
   MainStackParamList,
   'ClassScreen'
 >;
+
 type YearScreenResultRouteProp = RouteProp<MainStackParamList, 'ClassScreen'>;
 
 const ClassScreen: React.FC = () => {
@@ -34,6 +36,8 @@ const ClassScreen: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [appState, setAppState] = useState(AppState.currentState);
+  const [isInternetConnected, setIsInternetConnected] = useState<boolean>(true);
+  
   const route = useRoute<YearScreenResultRouteProp>();
   const results = route.params?.results;
 
@@ -46,8 +50,8 @@ const ClassScreen: React.FC = () => {
     navigation.dispatch(DrawerActions.openDrawer());
   }, [navigation]);
 
-  const renderItem = ({item}: {item: ClassAssignment}) => (
-    <View style={{marginVertical: 10, marginHorizontal: 15}}>
+  const renderItem = ({ item }: { item: ClassAssignment }) => (
+    <View style={{ marginVertical: 10, marginHorizontal: 15 }}>
       <YearlyComponent data={item} />
     </View>
   );
@@ -63,9 +67,17 @@ const ClassScreen: React.FC = () => {
   const loadData = async () => {
     try {
       const fetchedData = await classData();
+      if (!fetchedData || !fetchedData.classes) {
+        throw new Error('No classes data found');
+      }
       setData(fetchedData);
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching data:', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Data fetch failed',
+        text2: 'Unable to load class data.',
+      });
     } finally {
       setLoading(false);
       setRefreshing(false); // Stop refreshing indicator
@@ -74,6 +86,7 @@ const ClassScreen: React.FC = () => {
 
   const checkInternetAndLoadData = async () => {
     const netInfoState = await NetInfo.fetch();
+    setIsInternetConnected(netInfoState.isConnected);
     if (!netInfoState.isConnected) {
       Toast.show({
         type: 'error',
@@ -91,6 +104,7 @@ const ClassScreen: React.FC = () => {
     checkInternetAndLoadData(); // Initial data load
 
     const subscription = AppState.addEventListener('change', (nextAppState) => {
+      console.log('AppState changed:', nextAppState); // Add log for app state changes
       if (appState.match(/inactive|background/) && nextAppState === 'active') {
         checkInternetAndLoadData();
       }
@@ -113,7 +127,7 @@ const ClassScreen: React.FC = () => {
       ) : (
         <FlatList
           data={data?.classes}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={renderItem}
           contentContainerStyle={styles.contentContainer}
           refreshControl={
@@ -130,7 +144,7 @@ const ClassScreen: React.FC = () => {
       return (
         <FlatList
           data={results}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={renderItem}
           contentContainerStyle={styles.contentContainer}
           refreshControl={
@@ -147,7 +161,8 @@ const ClassScreen: React.FC = () => {
   return (
     <ImageBackground
       source={require('../../assest/icons/SideBarBg.jpg')}
-      style={styles.background}>
+      style={styles.background}
+    >
       <View style={styles.container}>
         <TopBar
           title="Classs"

@@ -29,6 +29,8 @@ const HeaderText = styled.Text`
 const SubHeaderText = styled.Text`
   font-size: ${screenHeight * 0.018}px;
   margin-bottom: ${screenHeight * 0.02}px;
+  color: black;
+  font-weight: 400;
 `;
 
 const Row = styled.View`
@@ -57,13 +59,16 @@ const AboveDateText = styled.Text`
 
 const CurrentDateText = styled.Text`
   font-size: ${screenHeight * 0.018}px;
+  color: black;
+  font-weight: 800;
 `;
 
 const DownloadButton = styled.TouchableOpacity`
-  background-color: #c2bdbd;
+  background-color:rgb(13, 13, 13);
   padding: ${screenHeight * 0.01}px;
   margin-bottom: ${screenHeight * 0.005}px;
   align-items: center;
+  border-radius: 8px;
 `;
 
 const styles = StyleSheet.create({

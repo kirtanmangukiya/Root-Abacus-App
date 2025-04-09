@@ -173,7 +173,7 @@ const AddAssignmentScreen = () => {
           <TextInput
             style={styles.input}
             placeholder="Enter Title"
-            placeholderTextColor="#999"
+            placeholderTextColor="#666"
             value={title}
             onChangeText={setTitle}
           />
@@ -183,7 +183,7 @@ const AddAssignmentScreen = () => {
           <TextInput
             style={[styles.input, styles.descriptionInput]}
             placeholder="Enter Description"
-            placeholderTextColor="#999"
+            placeholderTextColor="#666"
             value={description}
             onChangeText={setDescription}
             multiline
@@ -196,8 +196,8 @@ const AddAssignmentScreen = () => {
             style={styles.datePicker}>
             <Text style={styles.dateText}>{deadline.toLocaleDateString()}</Text>
           </TouchableOpacity>
-          <View style={styles.datePickerContainer}>
-            {showDatePicker && (
+          {showDatePicker && (
+            <View style={styles.datePickerContainer}>
               <DateTimePicker
                 value={deadline}
                 mode="date"
@@ -205,15 +205,15 @@ const AddAssignmentScreen = () => {
                 onChange={onDateChange}
                 textColor="black"
               />
-            )}
-          </View>
+            </View>
+          )}
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Assignment File</Text>
           <TouchableOpacity onPress={selectFile} style={styles.fileButton}>
             <Text style={styles.fileButtonText}>Select File</Text>
           </TouchableOpacity>
-          <View style={{}}>
+          <View style={styles.fileNameContainer}>
             {file ? (
               <Text style={styles.fileName}>{file?.[0]?.name}</Text>
             ) : (
@@ -224,64 +224,68 @@ const AddAssignmentScreen = () => {
 
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Year</Text>
-          <Picker
-            selectedValue={selectedClass}
-            onValueChange={itemValue => {
-              setSelectedClass(itemValue);
-              // Filter sections based on selected class
-              const sections = Object.values(data.sections).flat();
-              const filtered = sections.filter(
-                section => section.classId === parseInt(itemValue),
-              );
-              setFilteredSections(filtered);
-              setSelectedSection(''); // Reset selected section
-            }}
-            style={styles.picker}>
-            <Picker.Item label="Select Year" />
-            {data &&
-              Object.entries(data.classes).map(([key, value]) => (
-                <Picker.Item key={key} label={value} value={key} />
-              ))}
-          </Picker>
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={selectedClass}
+              onValueChange={itemValue => {
+                setSelectedClass(itemValue);
+                const sections = Object.values(data.sections).flat();
+                const filtered = sections.filter(
+                  section => section.classId === parseInt(itemValue),
+                );
+                setFilteredSections(filtered);
+                setSelectedSection('');
+              }}
+              style={styles.picker}>
+              <Picker.Item label="Select Year" value="" />
+              {data &&
+                Object.entries(data.classes).map(([key, value]) => (
+                  <Picker.Item key={key} label={value} value={key} />
+                ))}
+            </Picker>
+          </View>
         </View>
         {selectedClass && filteredSections.length > 0 && (
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Class</Text>
-            <Picker
-              selectedValue={selectedSection}
-              onValueChange={itemValue => setSelectedSection(itemValue)}
-              style={styles.picker}>
-              {filteredSections.map(section => (
-                <Picker.Item
-                  key={section.id}
-                  label={section.sectionName}
-                  value={section.classId}
-                />
-              ))}
-            </Picker>
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={selectedSection}
+                onValueChange={itemValue => setSelectedSection(itemValue)}
+                style={styles.picker}>
+                {filteredSections.map(section => (
+                  <Picker.Item
+                    key={section.id}
+                    label={section.sectionName}
+                    value={section.classId}
+                  />
+                ))}
+              </Picker>
+            </View>
           </View>
         )}
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Subjects</Text>
-          <Picker
-            selectedValue={subject}
-            onValueChange={itemValue => setSubject(itemValue)}
-            style={styles.picker}>
-            <Picker.Item label="Select Subject" />
-            {subjectData?.map((sub: any, index: number) => (
-              <Picker.Item
-                label={sub.subjectTitle}
-                value={sub.id}
-                key={index}
-              />
-            ))}
-          </Picker>
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={subject}
+              onValueChange={itemValue => setSubject(itemValue)}
+              style={styles.picker}>
+              <Picker.Item label="Select Subject" value="" />
+              {subjectData?.map((sub: any, index: number) => (
+                <Picker.Item
+                  label={sub.subjectTitle}
+                  value={sub.id}
+                  key={index}
+                />
+              ))}
+            </Picker>
+          </View>
         </View>
         <TouchableOpacity
-          style={styles.addButton}
+          style={[styles.addButton, loading && styles.disabledButton]}
           onPress={addAssignment}
-          disabled={loading} // Disable the button while loading
-        >
+          disabled={loading}>
           {loading ? (
             <ActivityIndicator size="small" color="#fff" />
           ) : (
@@ -299,91 +303,112 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    padding: 16,
+    padding: 20,
     alignItems: 'center',
   },
   inputContainer: {
     width: '100%',
-    marginBottom: 16,
+    marginBottom: 20,
   },
   label: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 8,
     color: '#ffffff',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10,
   },
   input: {
-    // other styles you might have
-    backgroundColor: 'white', // Remove background color
-    borderBottomWidth: 1, // Optional: adds a border below the input field
-    borderBottomColor: '#ccc', // Optional: color of the border
-    color: '#fffff', // Optional: text color
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+    color: '#000000',
+    borderWidth: 1,
+    borderColor: '#cccccc',
   },
   descriptionInput: {
-    height: 80,
-    textAlignVertical: 'top', // Ensures text starts at the top of the TextInput
+    height: 100,
+    textAlignVertical: 'top',
   },
   datePicker: {
     width: '100%',
-    height: 40,
-    borderColor: '#ccc',
+    height: 48,
+    borderColor: '#cccccc',
     borderWidth: 1,
-    padding: 10,
+    padding: 12,
     borderRadius: 8,
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
     justifyContent: 'center',
   },
   dateText: {
-    color: 'black',
+    color: '#000000',
+    fontSize: 16,
+  },
+  datePickerContainer: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    marginTop: 8,
   },
   fileButton: {
     backgroundColor: '#f80d0d',
     padding: 12,
     width: '40%',
-    borderRadius: 3,
+    borderRadius: 8,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
   },
   fileButtonText: {
-    color: '#fff',
+    color: '#ffffff',
     fontSize: 16,
+    fontWeight: 'bold',
+  },
+  fileNameContainer: {
+    marginTop: 8,
+    padding: 8,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 4,
   },
   fileName: {
     color: '#ffffff',
+    fontSize: 14,
+  },
+  pickerContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#cccccc',
+    overflow: 'hidden',
   },
   picker: {
     width: '100%',
-    height: 50,
-    color: '#000',
-    backgroundColor: '#fff',
-    borderRadius: 8,
+    height: 48,
+    color: '#000000',
   },
   addButton: {
     backgroundColor: '#2d7ca3',
     padding: 16,
-    paddingVertical: 10,
-    borderRadius: 3,
+    borderRadius: 8,
     alignItems: 'center',
     width: '100%',
+    marginTop: 20,
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
   },
+  disabledButton: {
+    opacity: 0.7,
+  },
   addButtonText: {
-    color: '#fff',
-    fontSize: 16,
+    color: '#ffffff',
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });

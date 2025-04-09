@@ -79,25 +79,38 @@ const InvoiceComponent = ({data, onInvoiceChange}) => {
 
   const handleFullView = useCallback(
     async fileName => {
-      const id = data?.id;
-      if (id) {
+      try {
+        const id = data?.id;
+        if (!id) {
+          console.log('ID is missing.');
+          return;
+        }
+
+        if (!data?.invoicePyaments?.[0]?.paymentTitle) {
+          console.log('Payment title is missing.');
+          return;
+        }
+
         const generatedHash = MD5.hex_md5(
-          data?.invoicePyaments?.[0]?.paymentTitle,
-        ); // Generate the MD5 hash from the id
-        console.log('---------------------', generatedHash);
+          data.invoicePyaments[0].paymentTitle,
+        );
+        console.log('Generated Hash:', generatedHash);
 
         const googleDriveUrl = `https://drive.google.com/viewerng/viewer?embedded=true&url=`;
         const pdfFileUrl = `https://axcel.schoolmgmtsys.com/getpdf.php?getInv=${generatedHash}`;
+        const pdfUrl = `${googleDriveUrl}${encodeURIComponent(pdfFileUrl)}`;
 
-        // Combine googleDriveUrl with the pdfFileUrl to get the complete URL
-        const pdfUrl = `${googleDriveUrl}${pdfFileUrl}`;
+        // Validate URL before navigation
+        if (!pdfUrl || typeof pdfUrl !== 'string') {
+          console.log('Invalid PDF URL');
+          return;
+        }
 
-        // Navigate to PdfShowComponent2 with the PDF URL
         navigation.navigate('PdfShowComponent2', {
-          pdfUrl, // Pass the pdfUrl
+          pdfUrl,
         });
-      } else {
-        console.log('ID is missing.');
+      } catch (error) {
+        console.error('Error in handleFullView:', error);
       }
     },
     [navigation, data],
@@ -111,14 +124,15 @@ const InvoiceComponent = ({data, onInvoiceChange}) => {
     setLoading(true);
     try {
       const stripeData = await StripeStatusData(); // Replace with actual API call
-      setStripeStatus(stripeData); // Set stripeStatus data
+      if (stripeData) {
+        setStripeStatus(stripeData); // Set stripeStatus data
+      }
     } catch (error) {
-      console.log(error);
+      console.error('Error loading stripe status:', error);
     } finally {
       setLoading(false);
     }
   }, []);
-
   const handlePayBill = useCallback(async () => {
     console.log('handlePayBill called');
     setLoading(true);
@@ -213,7 +227,7 @@ const InvoiceComponent = ({data, onInvoiceChange}) => {
       }
 
       const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.images],
+        type: [DocumentPicker.types.allFiles],
       });
 
       if (res && res.length > 0) {
@@ -244,8 +258,7 @@ const InvoiceComponent = ({data, onInvoiceChange}) => {
         Alert.alert('Error', 'Failed to pick the image');
       }
     }
-  }, [data, onInvoiceChange]);
-
+  }, [data, onInvoiceChange]);  
   if (sessionUrl) {
     return (
       <View style={styles.webviewContainer}>
@@ -347,7 +360,7 @@ const InvoiceComponent = ({data, onInvoiceChange}) => {
           </View>
         </View>
         <Text style={styles.paymentStatus}>
-          {data?.paymentStatus === 1 ? 'PAID' : data?.paymentStatus === 2 ? 'PARTIALLY PAID' : 'UNPAID'}
+          {data?.invoicePyaments?.[0]?.paymentStatus === 1 ? 'PAID' : data?.invoicePyaments?.[0]?.paymentStatus === 2 ? 'PARTIALLY PAID' : 'UNPAID'}
         </Text>
         <TouchableOpacity
           style={[styles.button, {marginLeft: '10%'}]}

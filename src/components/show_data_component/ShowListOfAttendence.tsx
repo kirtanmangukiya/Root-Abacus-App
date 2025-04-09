@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5', // Background color similar to your screenshot
   },
   container: {
-    backgroundColor: 'white',
+    backgroundColor: '#FFFFFF',
     padding: 16,
     marginVertical: 8,
     marginHorizontal: 16,
@@ -100,11 +100,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 3,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
   },
   dateText: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 8,
+    color: '#333333',
   },
   row: {
     flexDirection: 'row',
@@ -121,10 +124,12 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: '#222222',
   },
   statusText: {
     fontSize: 14,
-    color: 'gray',
+    color: '#666666',
+    marginTop: 4,
   },
   loader: {
     flex: 1,
@@ -132,9 +137,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   errorText: {
-    color: 'red',
+    color: '#FF0000',
     textAlign: 'center',
     marginTop: 20,
+    fontSize: 16,
   },
 });
 

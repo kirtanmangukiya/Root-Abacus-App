@@ -136,16 +136,21 @@ const SideBarEmployee: FC<SideBarProps> = props => {
   >;
   const navigation = useNavigation<StackScreenNavigate>();
   const {userData} = props;
-
-  const handleLogout = async () => {
-    try {
-      await AsyncStorage.clear(); // Clear all data from AsyncStorage
-      // AUTH_TOKEN = null; // Clear the in-memory token
-      navigation.navigate('Login'); // Navigate to the Login screen
-    } catch (error) {
-      console.error('Failed to clear AsyncStorage on logout:', error);
-    }
-  };
+    const handleLogout = async () => {
+      try {
+        await AsyncStorage.clear(); // Clear all stored data
+        Alert.alert('Success', 'Logout Successfully');
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Login'}],
+        });
+      } catch (error) {
+        Alert.alert(
+          'Error',
+          'An error occurred while logging out. Please try again.',
+        );
+      }
+    };
   type IconProps = {
     name: string;
     size: number;

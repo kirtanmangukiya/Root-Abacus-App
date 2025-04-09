@@ -138,7 +138,7 @@
             title="Assignment"
             onSearchPress={handleSearchPress}
             onRefreshPress={handleRefreshPress}
-            onMenuPress={results ? null : handleMenuPress}
+            onMenuPress={results ? undefined : handleMenuPress}
             handleAddPress={handleAddPress}
           />
           <View style={styles.content}>{renderContent()}</View>
@@ -162,6 +162,7 @@
     },
     contentContainer: {
       paddingVertical: 10,
+      paddingHorizontal: 15,
     },
     activityIndicatorContainer: {
       flex: 1,

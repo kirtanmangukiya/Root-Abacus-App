@@ -13,7 +13,6 @@ import {
   Alert,
 } from 'react-native';
 import {useNavigation, DrawerActions, useFocusEffect} from '@react-navigation/native';
-import ClassLeaderBoardScreen from './ClassLeaderBoardScreen';
 import StateSelectedScreen from './StateSelectedScreen';
 import NewsSelectedScreen from './NewsSelectedScreen';
 import {DashboardData} from '../config/axios';
@@ -22,6 +21,7 @@ import ActivityIndacatorr from '../components/activity_indicator/ActivityIndacat
 import NetInfo from '@react-native-community/netinfo';
 import Toast from 'react-native-toast-message';
 import TopBar from '../components/TopBar';
+import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 const Dashboard: React.FC = () => {
   const navigation = useNavigation();
@@ -53,14 +53,10 @@ const Dashboard: React.FC = () => {
     switch (index) {
       case 0:
         return selectedTab === 0
-          ? require('../assest/icons/dash_tab_leaderboard_selected.png')
-          : require('../assest/icons/dash_tab_leaderboard_unselected.png');
-      case 1:
-        return selectedTab === 1
           ? require('../assest/icons/dash_tab_stat_selected.png')
           : require('../assest/icons/dash_tab_stat_unselected.png');
-      case 2:
-        return selectedTab === 2
+      case 1:
+        return selectedTab === 1
           ? require('../assest/icons/dash_tab_news_selected.png')
           : require('../assest/icons/dash_tab_news_unselected.png');
       default:
@@ -159,17 +155,12 @@ const Dashboard: React.FC = () => {
           <TouchableOpacity
             style={[styles.tabButton, selectedTab === 0 && styles.selectedTab]}
             onPress={() => handleTabPress(0)}>
-            <Image source={getTabImage(0)} style={[{width: 35, height: 27}]} />
+            <Image source={getTabImage(0)} style={{width: 30, height: 28}} />
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.tabButton, selectedTab === 1 && styles.selectedTab]}
             onPress={() => handleTabPress(1)}>
-            <Image source={getTabImage(1)} style={{width: 35, height: 30}} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.tabButton, selectedTab === 2 && styles.selectedTab]}
-            onPress={() => handleTabPress(2)}>
-            <Image source={getTabImage(2)} style={{width: 45, height: 30}} />
+            <Image source={getTabImage(1)} style={{width: 40, height: 28}} />
           </TouchableOpacity>
         </View>
         <View style={styles.lineContainer}>
@@ -185,12 +176,6 @@ const Dashboard: React.FC = () => {
               {backgroundColor: selectedTab === 1 ? 'red' : 'white'},
             ]}
           />
-          <View
-            style={[
-              styles.line,
-              {backgroundColor: selectedTab === 2 ? 'red' : 'white'},
-            ]}
-          />
         </View>
         {loading ? (
           <View style={styles.loadingContainer}>
@@ -202,11 +187,8 @@ const Dashboard: React.FC = () => {
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }>
-            {selectedTab === 0 && (
-              <ClassLeaderBoardScreen data={data?.studentLeaderBoard ?? []} />
-            )}
-            {selectedTab === 1 && <StateSelectedScreen />}
-            {selectedTab === 2 && (
+            {selectedTab === 0 && <StateSelectedScreen />}
+            {selectedTab === 1 && (
               <NewsSelectedScreen newsData={data?.newsEvents} />
             )}
           </ScrollView>
@@ -229,17 +211,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    marginTop: '5%',
-    paddingHorizontal: '7%',
   },
   tabButton: {
     alignItems: 'center',
-    paddingVertical: 10,
+    justifyContent: 'center',
+    flex: 1,
   },
   tabIcon: {
-    width: 30,
-    height: 35,
-  },
+    width: '6%',
+    height: '4%',
+  },  
   selectedTab: {
     borderBottomWidth: 2,
   },

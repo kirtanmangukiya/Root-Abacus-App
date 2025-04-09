@@ -79,9 +79,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
-    // backgroundColor: '#000', // Ensure background color matches design
+
   },
   leftContainer: {
     flexDirection: 'row',

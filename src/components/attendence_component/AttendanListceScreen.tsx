@@ -100,10 +100,10 @@ const AttendanceListScreen: React.FC = () => {
       attendanceDay: attendanceDay,
       classId: data?.class?.id,
       subjectId: data?.class?.classSubjects
-        ? Number(JSON.parse(data?.class?.classSubjects)[0]) // Convert the subjectId to a number
+        ? Number(JSON.parse(data?.class?.classSubjects)[0])
         : null,
       stAttendance: attendanceData
-        .filter(({attendance, attNotes}) => attendance !== '5' && attNotes) // Filter out '5' attendance and empty 'attNotes'
+        .filter(({attendance, attNotes}) => attendance !== '5' && attNotes)
         .map(({id, attendance, attNotes}) => ({
           id,
           attendance:
@@ -118,7 +118,7 @@ const AttendanceListScreen: React.FC = () => {
               : attendance === 'Early Dismissall'
               ? '4'
               : '5',
-          attNotes: attNotes || '', // Pass the attendance notes if available
+          attNotes: attNotes || '',
         })),
     };
 
@@ -200,31 +200,49 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: wp('4%'),
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
   searchBar: {
     padding: wp('2%'),
     marginVertical: hp('2%'),
     borderRadius: wp('2%'),
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
+    color: '#333',
   },
   noDataFoundContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    borderRadius: wp('2%'),
+    padding: wp('4%'),
   },
   noDataFoundText: {
     fontSize: wp('4%'),
-    color: 'white',
+    color: '#f5f5f5',
     fontWeight: 'bold',
+    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
   },
   saveButton: {
     padding: wp('4%'),
-    backgroundColor: '#645d5d',
+    backgroundColor: '#2c3e50',
     alignItems: 'center',
+    borderRadius: wp('2%'),
+    marginTop: hp('2%'),
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
   saveButtonText: {
     color: '#fff',
     fontSize: wp('4%'),
+    fontWeight: 'bold',
+    textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3)',
   },
 });
 

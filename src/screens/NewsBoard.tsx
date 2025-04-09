@@ -39,8 +39,7 @@ const NewsBoard: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [appState, setAppState] = useState(AppState.currentState);
-  const [isSearchResult, setIsSearchResult] = useState<boolean>(false); // Track if data is from search
+  const [isSearchResult, setIsSearchResult] = useState<boolean>(false);
 
   // Pagination states
   const [page, setPage] = useState<number>(1);
@@ -69,7 +68,7 @@ const NewsBoard: React.FC = () => {
         }));
       } else {
         setNewsBoard(data);
-        setIsSearchResult(false); // Reset to indicate the data is original, not from search
+        setIsSearchResult(false);
       }
 
       if (data.newsboard.length === 0) {
@@ -104,22 +103,11 @@ const NewsBoard: React.FC = () => {
 
   useEffect(() => {
     if (results) {
-      setIsSearchResult(true); // Set flag if data is from search
+      setIsSearchResult(true);
     } else {
       checkInternetAndLoadData();
     }
-
-    const subscription = AppState.addEventListener('change', (nextAppState) => {
-      if (appState.match(/inactive|background/) && nextAppState === 'active') {
-        checkInternetAndLoadData();
-      }
-      setAppState(nextAppState);
-    });
-
-    return () => {
-      subscription.remove();
-    };
-  }, [appState, results]);
+  }, [results]);
 
   const handleSearchPress = useCallback(() => {
     const pushAction = StackActions.push('SearchScreen', {
@@ -131,8 +119,8 @@ const NewsBoard: React.FC = () => {
 
   const handleRefreshPress = useCallback(() => {
     setRefreshing(true);
-    setHasMore(true); // Reset hasMore when refreshing
-    loadData(); // Reload original data
+    setHasMore(true);
+    loadData();
   }, []);
 
   const handleMenuPress = useCallback(() => {
@@ -186,7 +174,7 @@ const NewsBoard: React.FC = () => {
           }
           onEndReached={() => loadData(true)}
           onEndReachedThreshold={0.5}
-          ListFooterComponent={() => loadingMore ? <ActivityIndicator size="large" color="#ffffff" /> : null}
+          ListFooterComponent={() => loadingMore ? <ActivityIndicator size="large" color="#000000" /> : null}
         />
       ) : (
         <NoDataFound noFoundTitle="Data Not Found" />
@@ -196,14 +184,14 @@ const NewsBoard: React.FC = () => {
 
   return (
     <ImageBackground
-      source={require('../assest/icons/SideBarBg.jpg')} // Replace with your image path
+      source={require('../assest/icons/SideBarBg.jpg')}
       style={styles.background}>
       <View style={styles.container}>
         <TopBar
           title="News Board"
           onSearchPress={handleSearchPress}
           onRefreshPress={handleRefreshPress}
-          onMenuPress={results ? null : handleMenuPress}
+          onMenuPress={results ? undefined : handleMenuPress}
         />
         {renderContent()}
       </View>
